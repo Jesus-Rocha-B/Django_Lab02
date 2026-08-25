@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Lista de Items{% endblock %}
+{% block content %}
+    <h2>Lista de Items</h2>
+    <input 
+        type="text" 
+        id="searchInput" 
+        class="search" 
+        placeholder="Buscar un item"
+    >
+    <div id="itemsList">
+        {% for item in items %}
+            <article class="item">
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
+                <p class="date">Creado: {{ item.created_at }}</p>
+            </article>
+        {% empty %}
+            <p>No existen items registrados</p>
+        {% endfor %}
+
+    </div>
+    <p id="noResults" style="display: none;">
+        No se encontraron items
+    </p>
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const items = document.querySelectorAll(".item");
+        const noResults = document.getElementById("noResults");
+
+        searchInput.addEventListener("input", function() {
+            const searchText = searchInput.value.toLowerCase();
+            let found = false;
+
+            items.forEach(function(item) {
+                const name = item.querySelector("h3").textContent.toLowerCase();
+
+                if (name.includes(searchText)) {
+                    item.style.display = "block";
+                    found = true;
+                } else {
+                    item.style.display = "none";
+                }
+            });
+            noResults.style.display = found ? "none" : "block";
+        });
+    </script>
+{% endblock %}
