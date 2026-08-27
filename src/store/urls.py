@@ -1,7 +1,8 @@
 from django.urls import path
-
+from . import views
+ 
 app_name = 'store'
-
+ 
 urlpatterns = [
-    # Se llenará en el siguiente paso de vistas
+    path('', views.prenda_list, name='list'),
 ]

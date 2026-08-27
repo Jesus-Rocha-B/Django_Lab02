@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 fw-bold text-dark mb-0">{{ titulo }}</h1>
+            <p class="text-muted small">Módulo de gestión de catálogo - Moda y Calzado</p>
+        </div>
+        <a href="#" class="btn btn-primary px-4 shadow-sm fw-semibold">+ Nueva Prenda</a>
+    </div>
+
+    <!-- Tabla de Productos -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="ps-3">ID</th>
+                            <th>Producto</th>
+                            <th>Marca</th>
+                            <th>Público / Tipo</th>
+                            <th>Talla</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th class="text-end pe-3">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prenda in prendas %}
+                        <tr>
+                            <td class="ps-3 fw-bold text-muted">#{{ prenda.id }}</td>
+                            <td>
+                                <strong>{{ prenda.nombre }}</strong>
+                                <small class="d-block text-muted">{{ prenda.categoria }}</small>
+                            </td>
+                            <td><span class="badge bg-secondary">{{ prenda.marca }}</span></td>
+                            <td>
+                                {% if prenda.tipo == 'Hombre' %}
+                                    <span class="badge bg-primary">Hombre</span>
+                                {% elif prenda.tipo == 'Mujer' %}
+                                    <span class="badge bg-danger">Mujer</span>
+                                {% elif prenda.tipo == 'Niños' %}
+                                    <span class="badge bg-warning text-dark">Niños</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Unisex</span>
+                                {% endif %}
+                            </td>
+                            <td><span class="fw-semibold">{{ prenda.talla }}</span></td>
+                            <td class="fw-bold text-success">S/ {{ prenda.precio|floatformat:2 }}</td>
+                            <td>
+                                {% if prenda.stock == 0 %}
+                                    Agotado
+                                {% else %}
+                                    {{ prenda.stock }} und.
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if prenda.disponible %}
+                                    <span class="badge bg-success">Activo</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Inactivo</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end pe-3">
+                                <a href="#" class="btn btn-sm btn-outline-info">Ver Detalle</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center py-4 text-muted">
+                                No existen prendas registradas en el catálogo.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
