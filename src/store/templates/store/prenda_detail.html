@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 fw-bold text-dark mb-1">Ficha de Producto #{{ prenda.id }}</h1>
+
+            {% if prenda.disponible %}
+                <span class="badge bg-success mb-3">Disponible para Venta</span>
+            {% else %}
+                <span class="badge bg-secondary mb-3">No Disponible</span>
+            {% endif %}
+
+            <h2 class="h4 fw-semibold">{{ prenda.nombre }}</h2>
+            <p class="text-muted">Fabricante / Marca: <strong>{{ prenda.marca }}</strong></p>
+
+            <hr>
+
+            <p class="mb-1">Precio Unitario: <strong>S/ {{ prenda.precio|floatformat:2 }}</strong></p>
+            <p class="mb-1">
+                Inventario Actual:
+                {% if prenda.stock == 0 %}
+                    <strong class="text-danger">Agotado</strong>
+                {% else %}
+                    <strong>{{ prenda.stock }} und.</strong>
+                {% endif %}
+            </p>
+            <p class="mb-1">Talla: <strong>{{ prenda.talla }}</strong></p>
+            <p class="mb-1">Público / Segmento: <strong>{{ prenda.tipo }}</strong></p>
+            <p class="mb-3">Categoría de Prenda: <strong>{{ prenda.categoria }}</strong></p>
+
+            <p class="text-muted small mb-1">Especificaciones y Material:</p>
+            <p>{{ prenda.descripcion }}</p>
+
+            <a href="{% url 'store:list' %}" class="fw-semibold">&larr; Volver al Catálogo</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

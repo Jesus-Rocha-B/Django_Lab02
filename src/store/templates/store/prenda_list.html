@@ -10,7 +10,7 @@
             <h1 class="h2 fw-bold text-dark mb-0">{{ titulo }}</h1>
             <p class="text-muted small">Módulo de gestión de catálogo - Moda y Calzado</p>
         </div>
-        <a href="#" class="btn btn-primary px-4 shadow-sm fw-semibold">+ Nueva Prenda</a>
+        <a href="{% url 'store:create' %}" class="btn btn-primary px-4 shadow-sm fw-semibold">+ Nueva Prenda</a>
     </div>
 
     <!-- Tabla de Productos -->
@@ -68,7 +68,7 @@
                                 {% endif %}
                             </td>
                             <td class="text-end pe-3">
-                                <a href="#" class="btn btn-sm btn-outline-info">Ver Detalle</a>
+                                <a href="{% url 'store:detail' prenda.id %}" class="btn btn-sm btn-outline-info">Ver Detalle</a>
                             </td>
                         </tr>
                         {% empty %}
