@@ -4,38 +4,63 @@
 
 {% block content %}
 <div class="container my-4">
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-            <h1 class="h3 fw-bold text-dark mb-1">Ficha de Producto #{{ prenda.id }}</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'store:list' %}" class="text-decoration-none text-muted small fw-semibold">
+                    <i class="bi bi-arrow-left me-1"></i> Volver al Catálogo
+                </a>
+            </div>
 
-            {% if prenda.disponible %}
-                <span class="badge bg-success mb-3">Disponible para Venta</span>
-            {% else %}
-                <span class="badge bg-secondary mb-3">No Disponible</span>
-            {% endif %}
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-header bg-dark text-white py-3 px-4 d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark fw-bold">ID #{{ prenda.id }}</span>
+                    {% if prenda.disponible %}
+                        <span class="badge badge-soft-success px-3 py-1">Disponible para Venta</span>
+                    {% else %}
+                        <span class="badge badge-soft-danger px-3 py-1">No Disponible</span>
+                    {% endif %}
+                </div>
+                <div class="card-body p-4 bg-white">
+                    <h2 class="h3 fw-bold text-dark mb-1">{{ prenda.nombre }}</h2>
+                    <p class="text-muted mb-4">Fabricante / Marca: <strong class="text-dark">{{ prenda.marca }}</strong></p>
 
-            <h2 class="h4 fw-semibold">{{ prenda.nombre }}</h2>
-            <p class="text-muted">Fabricante / Marca: <strong>{{ prenda.marca }}</strong></p>
+                    <div class="row g-3 p-3 bg-light rounded-3 mb-4">
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Precio Unitario:</span>
+                            <h3 class="text-success fw-bold mb-0">S/ {{ prenda.precio|floatformat:2 }}</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Inventario Actual:</span>
+                            {% if prenda.stock == 0 %}
+                                <span class="badge bg-danger fs-6 mt-1">Agotado</span>
+                            {% else %}
+                                <h4 class="fw-bold text-dark mb-0">{{ prenda.stock }} und.</h4>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Talla:</span>
+                            <span class="fw-semibold text-dark">{{ prenda.talla }}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Público / Segmento:</span>
+                            <span class="fw-semibold text-dark">{{ prenda.tipo }} ({{ prenda.categoria }})</span>
+                        </div>
+                    </div>
 
-            <hr>
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-secondary text-uppercase small">Especificaciones y Material:</h6>
+                        <p class="text-dark">{{ prenda.descripcion|default:"Sin especificaciones adicionales registradas." }}</p>
+                    </div>
 
-            <p class="mb-1">Precio Unitario: <strong>S/ {{ prenda.precio|floatformat:2 }}</strong></p>
-            <p class="mb-1">
-                Inventario Actual:
-                {% if prenda.stock == 0 %}
-                    <strong class="text-danger">Agotado</strong>
-                {% else %}
-                    <strong>{{ prenda.stock }} und.</strong>
-                {% endif %}
-            </p>
-            <p class="mb-1">Talla: <strong>{{ prenda.talla }}</strong></p>
-            <p class="mb-1">Público / Segmento: <strong>{{ prenda.tipo }}</strong></p>
-            <p class="mb-3">Categoría de Prenda: <strong>{{ prenda.categoria }}</strong></p>
-
-            <p class="text-muted small mb-1">Especificaciones y Material:</p>
-            <p>{{ prenda.descripcion }}</p>
-
-            <a href="{% url 'store:list' %}" class="fw-semibold">&larr; Volver al Catálogo</a>
+                    <div class="pt-3 border-top">
+                        <a href="{% url 'store:list' %}" class="btn btn-outline-primary rounded-pill px-4">
+                            <i class="bi bi-arrow-left me-1"></i> Volver al Catálogo
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
